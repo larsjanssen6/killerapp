@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Core.Dashboard.DashboardController">
+   <children>
+      <Canvas height="283.0" layoutX="32.0" layoutY="50.0" width="537.0" />
+      <TableView id="tablePolls" fx:id="tablePolls" layoutX="95.0" layoutY="26.0" prefHeight="217.0" prefWidth="462.0">
+        <columns>
+            <TableColumn id="id" fx:id="id" prefWidth="50.0" text="id" />
+            <TableColumn id="question" fx:id="question" prefWidth="411.0" text="Vragen" />
+        </columns>
+      </TableView>
+      <Button layoutX="95.0" layoutY="262.0" mnemonicParsing="false" onAction="#loadPolls" text="Laad polls" />
+      <Button layoutX="95.0" layoutY="306.0" mnemonicParsing="false" onAction="#newPoll" prefHeight="27.0" prefWidth="123.0" text="Nieuwe poll" />
+      <Button layoutX="479.0" layoutY="262.0" mnemonicParsing="false" onAction="#signOut" text="Uitloggen" />
+   </children>
+</AnchorPane>

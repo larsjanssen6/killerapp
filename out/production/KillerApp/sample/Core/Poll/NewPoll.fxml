@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="325.0" prefWidth="427.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Core.Poll.PollMakeController">
+   <children>
+      <Pane layoutX="6.0" layoutY="7.0" prefHeight="304.0" prefWidth="409.0">
+         <children>
+            <Button layoutX="8.0" layoutY="14.0" mnemonicParsing="false" onAction="#btnHome" text="Home" />
+            <Label layoutX="44.0" layoutY="85.0" text="V" />
+            <Button layoutX="195.0" layoutY="251.0" mnemonicParsing="false" onAction="#btnMake" text="Maak" />
+            <TextField fx:id="txtQuestion" layoutX="62.0" layoutY="80.0" prefHeight="27.0" prefWidth="329.0" />
+            <TextField fx:id="txtOptionOne" layoutX="62.0" layoutY="120.0" prefHeight="27.0" prefWidth="329.0" />
+            <TextField fx:id="txtOptionTwo" layoutX="62.0" layoutY="160.0" prefHeight="27.0" prefWidth="329.0" />
+            <TextField fx:id="txtOptionThree" layoutX="62.0" layoutY="203.0" prefHeight="27.0" prefWidth="329.0" />
+            <Label layoutX="45.0" layoutY="125.0" text="1" />
+            <Label layoutX="45.0" layoutY="165.0" text="2" />
+            <Label layoutX="44.0" layoutY="208.0" text="3" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
