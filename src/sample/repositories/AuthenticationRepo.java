@@ -58,9 +58,14 @@ public class AuthenticationRepo {
             IConnection connection = new ConnectionManager();
             Connection conn = connection.getConnection();
 
-            Statement statement = conn.createStatement();
+            String query = "INSERT into `user` (firstname, lastname, username, password) VALUES (?, ?, ?, ?)";
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getLastName());
+            statement.setString(3, user.getUsername());
+            statement.setString(4, user.getPassword());
+            statement.execute();
 
-            statement.execute("INSERT  into user (firstname, lastname, username, password) VALUES ('" + user.getFirstName() + "', '" + user.getLastName() + "','" + user.getUsername() + "','" + user.getPassword() + "')");
             return true;
         }
         catch (Exception ex) {

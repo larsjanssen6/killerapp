@@ -1,4 +1,6 @@
-package sample.server.interfaces;
+package sample.server;
+
+import sample.server.interfaces.IListener;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;

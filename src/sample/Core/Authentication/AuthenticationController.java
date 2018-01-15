@@ -12,9 +12,9 @@ import sample.Core.Dashboard.DashboardController;
 import sample.Core.Registration.RegisterController;
 import sample.Core.Session;
 import sample.domain.User;
-import sample.repositories.AuthenticationRepo;
-import sample.server.PollManagerServer;
 import sample.server.interfaces.PollManagerServerInterface;
+import sample.serverAuthenticatie.AuthenticationManagerInterface;
+import sample.serverGrafieken.interfaces.GraphManagerServerInterface;
 
 import java.rmi.NotBoundException;
 import java.rmi.registry.LocateRegistry;
@@ -31,14 +31,16 @@ public class AuthenticationController {
     @FXML
     private PasswordField txtPassword;
 
-    private Registry registry;
+    private Registry pollServerRegistry;
+
+    private Registry graphServerRegistry;
+
+    private Registry authenticationManager;
 
     private Session session;
 
-    private AuthenticationRepo authenticationRepo;
 
     public AuthenticationController() throws SQLException, IOException, ClassNotFoundException {
-        authenticationRepo = new AuthenticationRepo();
     }
 
     public void setup() {}
@@ -47,19 +49,31 @@ public class AuthenticationController {
     public void login() throws SQLException, IOException, ClassNotFoundException, NotBoundException {
 
         /*
+            Create the session
+         */
+
+        this.session = new Session();
+        this.authenticationManager = locateRegistryAuthenticationManager();
+
+        session.setAuthenticationManagerServer((AuthenticationManagerInterface) authenticationManager.lookup("AuthenticationManager"));
+
+        /*
             Check if user has given correct credentials. Return
             proper response.
          */
 
         if (!txtUsername.getText().trim().isEmpty() && !txtPassword.getText().trim().isEmpty()) {
-            User user = authenticationRepo.login(txtUsername.getText(), txtPassword.getText());
+            User user = session.getAuthenticationManagerServer().login(txtUsername.getText(), txtPassword.getText());
 
-            if (user != null){
+            if (user.getUsername() != null){
                 System.out.println("success");
 
-                this.registry = locateRegistry();
-                this.session = new Session((PollManagerServerInterface) registry.lookup("PollManager"));
+                this.pollServerRegistry = locateRegistryPollServer();
+                this.graphServerRegistry = locateRegistryGraphServer();
 
+                session.setUser(user);
+                session.setPollServer((PollManagerServerInterface) pollServerRegistry.lookup("PollManager"));
+                session.setGraphManagerServer((GraphManagerServerInterface) graphServerRegistry.lookup("GraphManager"));
                 openDashboard();
             }
             else
@@ -104,10 +118,44 @@ public class AuthenticationController {
         stage.show();
     }
 
-    private Registry locateRegistry() throws SQLException, IOException, ClassNotFoundException {
+    private Registry locateRegistryPollServer() throws SQLException, IOException, ClassNotFoundException {
+        System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+
         try
         {
             return LocateRegistry.getRegistry("127.0.0.1", 1099);
+        }
+        catch (RemoteException ex) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("No connection to Server");
+            alert.setContentText("The server is unavailable at this time, try again later.");
+            return null;
+        }
+    }
+
+    private Registry locateRegistryGraphServer() throws SQLException, IOException, ClassNotFoundException {
+        System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+
+        try
+        {
+            return LocateRegistry.getRegistry("127.0.0.1", 1088);
+        }
+        catch (RemoteException ex) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Error");
+            alert.setHeaderText("No connection to Server");
+            alert.setContentText("The server is unavailable at this time, try again later.");
+            return null;
+        }
+    }
+
+    private Registry locateRegistryAuthenticationManager() throws SQLException, IOException, ClassNotFoundException {
+        System.setProperty("java.rmi.server.hostname", "127.0.0.1");
+
+        try
+        {
+            return LocateRegistry.getRegistry("127.0.0.1", 1077);
         }
         catch (RemoteException ex) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

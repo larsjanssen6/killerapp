@@ -39,7 +39,7 @@ public class DashboardController extends UnicastRemoteObject implements IListene
         this.session = session;
 
         try {
-            session.getServer().addListener(this);
+            session.getPollServer().addListener(this);
         } catch (RemoteException e) {
             System.out.println("Could not register listener");
         }
@@ -72,7 +72,7 @@ public class DashboardController extends UnicastRemoteObject implements IListene
         id.setCellValueFactory(new PropertyValueFactory<Poll,String>("id"));
 
         try {
-            List<Poll> polls = session.getServer().getAll();
+            List<Poll> polls = session.getPollServer().getAll();
             if (!polls.isEmpty()) {
                 for (Poll poll : polls) {
                     tablePolls.getItems().add(poll);
@@ -95,7 +95,7 @@ public class DashboardController extends UnicastRemoteObject implements IListene
 
     @FXML
     private void newPoll() throws IOException {
-        session.getServer().removeListener(this);
+        session.getPollServer().removeListener(this);
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Poll/NewPoll.fxml"));
         Parent root = (Parent)fxmlLoader.load();
@@ -109,7 +109,7 @@ public class DashboardController extends UnicastRemoteObject implements IListene
     }
 
     public void openPoll(Poll poll) throws IOException, SQLException, ClassNotFoundException {
-        session.getServer().removeListener(this);
+        session.getPollServer().removeListener(this);
 
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../Poll/Poll.fxml"));
         Parent root = (Parent)fxmlLoader.load();

@@ -23,10 +23,6 @@ public class PollManagerServer extends UnicastRemoteObject implements PollManage
         pollRepo = new PollRepo();
     }
 
-    @Override
-    public void broadCastNewVote() {
-
-    }
 
     @Override
     public List<Poll> getAll() throws SQLException, IOException, ClassNotFoundException {
@@ -39,11 +35,28 @@ public class PollManagerServer extends UnicastRemoteObject implements PollManage
     }
 
     @Override
-    public void store(Poll poll, Option optionOne, Option optionTwo, Option optionThree) throws RemoteException {
+    public int getVotes(Option option) throws SQLException, IOException, ClassNotFoundException {
+        return pollRepo.findVotes(option);
+    }
+
+    @Override
+    public int getTotalVotes(Poll poll) throws SQLException, IOException, ClassNotFoundException {
+        return pollRepo.findTotalVotes(poll);
+    }
+
+    @Override
+    public boolean vote(int optionId, int userId) throws SQLException, IOException, ClassNotFoundException {
+        return pollRepo.vote(optionId, userId);
+    }
+
+    @Override
+    public boolean store(Poll poll, Option optionOne, Option optionTwo, Option optionThree) throws RemoteException {
         this.pollRepo.store(poll, optionOne, optionTwo, optionThree);
 
         for (IListener client:listeners)
                 client.refreshPolls();
+
+        return true;
     }
 
     @Override
@@ -54,5 +67,10 @@ public class PollManagerServer extends UnicastRemoteObject implements PollManage
     @Override
     public void removeListener(IListener listener) throws RemoteException {
         listeners.remove(listener);
+    }
+
+    public List<IListener> getListeners()
+    {
+        return listeners;
     }
 }

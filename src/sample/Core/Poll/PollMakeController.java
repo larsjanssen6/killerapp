@@ -64,6 +64,6 @@ public class PollMakeController {
         optionThree.setName(txtOptionThree.getText());
 
         System.out.println(optionOne.getName());
-        this.session.getServer().store(poll, optionOne, optionTwo, optionThree);
+        this.session.getPollServer().store(poll, optionOne, optionTwo, optionThree);
     }
 }

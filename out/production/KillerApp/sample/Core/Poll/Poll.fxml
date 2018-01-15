@@ -10,10 +10,13 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Core.Poll.PollController">
    <children>
       <Button fx:id="home" layoutX="34.0" layoutY="44.0" mnemonicParsing="false" onAction="#btnHome" text="Home" />
-      <Button layoutX="241.0" layoutY="243.0" mnemonicParsing="false" onAction="#btnVote" prefHeight="27.0" prefWidth="116.0" text="Stem" />
+      <Button layoutX="241.0" layoutY="241.0" mnemonicParsing="false" onAction="#btnVote" prefHeight="27.0" prefWidth="116.0" text="Stem" />
       <CheckBox fx:id="cbThree" layoutX="241.0" layoutY="200.0" mnemonicParsing="false" />
       <CheckBox fx:id="cbTwo" layoutX="241.0" layoutY="159.0" mnemonicParsing="false" />
       <CheckBox fx:id="cbOne" layoutX="241.0" layoutY="118.0" mnemonicParsing="false" />
       <Text fx:id="txtQuestion" layoutX="196.0" layoutY="84.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Label fx:id="txtOptionOneProcent" layoutX="190.0" layoutY="119.0" />
+      <Label fx:id="txtOptionTwoProcent" layoutX="190.0" layoutY="160.0" />
+      <Label fx:id="txtOptionThreeProcent" layoutX="190.0" layoutY="201.0" />
    </children>
 </AnchorPane>
